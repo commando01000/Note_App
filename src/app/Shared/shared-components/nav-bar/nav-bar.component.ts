@@ -19,7 +19,7 @@ export class NavBarComponent {
       console.log(this._auth.isLoggedIn.getValue());
     }
   }
-  changeNavStatus() {
+  changeNavBarStatus() {
     if (this._auth.currentStatus.getValue() == 'Login') {
       this._auth.currentStatus.next('Register');
       this.currentStatus = this._auth.currentStatus.getValue();
