@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationGuard } from './Guards/Authentication.guard';
+import { afterLoginGuard } from './Guards/after-login.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
+    canActivate: [afterLoginGuard],
     loadChildren: () =>
       import('./Modules/home/home.module').then(
         (m) => m.HomeModule

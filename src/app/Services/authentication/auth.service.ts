@@ -9,13 +9,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AuthService {
   userData = new BehaviorSubject(null);
-  isLoggedIn = new BehaviorSubject(false)
+  isLoggedIn = new BehaviorSubject(false);
   currentStatus = new BehaviorSubject('Login');
+
   constructor(private _http: HttpClient) {}
   getUserData() {
     let encodedToken: any = localStorage.getItem('token');
     let decodedToken: any = jwtDecode(encodedToken);
-    console.log(decodedToken);
+    // console.log(decodedToken);
     this.isLoggedIn.next(true);
     this.userData.next(decodedToken);
   }
