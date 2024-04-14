@@ -32,6 +32,5 @@ export class NavBarComponent {
     this._auth.endUserSession();
     this._router.navigate(['/authentication/sign-in']);
   }
-
   ngOnInit(): void {}
 }
