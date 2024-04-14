@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/authentication/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,10 +9,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent {
-  constructor(private _Router: Router) {}
-
   flag: boolean = false;
   apiError: string = '';
+  constructor(private _Router: Router, private _auth: AuthService) {
+  }
   //bulid the login form
   login: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -25,7 +26,21 @@ export class SignInComponent {
   });
   handleLogin(login: FormGroup) {
     if (login.valid) {
-      
+      this._auth.login(login.value).subscribe({
+        next: (response) => {
+          console.log(response);
+          localStorage.setItem('token', response.token);
+          this._auth.getUserData();
+          this._Router.navigate(['/home']);
+        },
+        error: (err) => {
+          this.apiError = err.error.message;
+        },
+        complete: () => {
+          this.flag = true;
+          console.log('completed');
+        },
+      });
     }
   }
 }

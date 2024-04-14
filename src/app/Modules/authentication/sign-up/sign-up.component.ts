@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/authentication/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent {
-  constructor(private _Router: Router) {}
+  constructor(private _Router: Router, private _auth: AuthService) {}
 
   status: boolean = false;
 
@@ -17,7 +18,7 @@ export class SignUpComponent {
     name: new FormControl(null, [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(10),
+      Validators.maxLength(120),
     ]),
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [
@@ -34,8 +35,23 @@ export class SignUpComponent {
     ]),
   });
   handleSignUp(signUp: FormGroup) {
+    console.log(signUp.value);
     if (signUp.valid) {
       this.status = true;
+      this._auth.register(signUp.value).subscribe({
+        next: (response) => {
+          console.log(response);
+          this._Router.navigate(['/authentication/sign-in']);
+          this.status = false;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this.status = false;
+        },
+      });
+      
     }
   }
 }
