@@ -64,8 +64,8 @@
               type="submit"
               class="btn login-button my-2 w-100 d-block"
             >
-              <i *ngIf="flag" class="fas fa-spinner fa-spin"></i>
-              <span *ngIf="!flag">Login</span>
+              <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+              <span *ngIf="!isLoading">Login</span>
             </button>
           </form>
         </div>

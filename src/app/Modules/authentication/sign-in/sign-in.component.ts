@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/Services/authentication/auth.service';
   styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent {
-  flag: boolean = false;
+  isLoading: boolean = false;
   apiError: string = '';
   constructor(private _Router: Router, private _auth: AuthService) {
   }
@@ -25,19 +25,21 @@ export class SignInComponent {
     ]),
   });
   handleLogin(login: FormGroup) {
+    this.isLoading = true;
     if (login.valid) {
       this._auth.login(login.value).subscribe({
         next: (response) => {
-          console.log(response);
           localStorage.setItem('token', response.token);
           this._auth.getUserData();
           this._Router.navigate(['/home']);
         },
         error: (err) => {
           this.apiError = err.error.message;
+          this.isLoading = false;
+          //this.flag = false;
         },
         complete: () => {
-          this.flag = true;
+          this.isLoading = false;
           console.log('completed');
         },
       });

@@ -13,10 +13,8 @@ export class NavBarComponent {
   constructor(private _auth: AuthService, private _router: Router) {
     if (this._auth.isLoggedIn.getValue()) {
       this.isLoggedIn = this._auth.isLoggedIn.getValue();
-      console.log(this._auth.isLoggedIn.getValue());
     } else {
       this.isLoggedIn = this._auth.isLoggedIn.getValue();
-      console.log(this._auth.isLoggedIn.getValue());
     }
   }
   changeNavBarStatus() {
