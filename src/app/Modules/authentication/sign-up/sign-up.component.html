@@ -123,8 +123,8 @@
               type="submit"
               class="btn submit-button my-2 w-100 d-block"
             >
-              <i *ngIf="status" class="fas fa-spinner fa-spin"></i>
-              <span *ngIf="!status">Sign Up!</span>
+              <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+              <span *ngIf="!isLoading">Sign Up!</span>
             </button>
           </form>
         </div>

@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/Services/authentication/auth.service';
 export class SignUpComponent {
   constructor(private _Router: Router, private _auth: AuthService) {}
 
-  status: boolean = false;
+  isLoading: boolean = false;
 
   // form declare
   signUp: FormGroup = new FormGroup({
@@ -35,20 +35,21 @@ export class SignUpComponent {
     ]),
   });
   handleSignUp(signUp: FormGroup) {
+    this.isLoading = true;
     console.log(signUp.value);
     if (signUp.valid) {
-      this.status = true;
       this._auth.register(signUp.value).subscribe({
         next: (response) => {
           console.log(response);
           this._Router.navigate(['/authentication/sign-in']);
-          this.status = false;
+          this.isLoading = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoading = false;
         },
         complete: () => {
-          this.status = false;
+          this.isLoading = false;
         },
       });
       
